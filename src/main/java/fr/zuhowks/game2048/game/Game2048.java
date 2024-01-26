@@ -49,19 +49,20 @@ public class Game2048 {
             for (int row=1; row<4; row++) {
                 final int caseValue = this.getCase(row, column);
                 int row_ = row;
+                if (caseValue > 0) {
+                    while (!(this.getCase(row_, column) == -1 || (row_ == 1) || (this.getCase(row_, column) == 0 && this.getCase(row_ - 1, column) >= 0))) {
+                        row_--;
+                    }
 
-                while (!(this.getCase(row_, column) == -1 || (row_ == 1) || (this.getCase(row_, column) == 0 && this.getCase(row_ - 1, column) >= 0))) {
-                    row_--;
-                }
+                    if (this.getCase(row_, column) == -1 || ((this.getCase(row_, column) == 0 || row == row_) && this.getCase(row_ - 1, column) != caseValue)) {
+                        this.setCase(row, column, 0);
+                        this.setCase(row_ - (this.getCase(row_ - 1, column) == 0 ? 1 : 0), column, caseValue);
 
-                if (this.getCase(row_, column) == -1 || (this.getCase(row_, column) == 0 && (this.getCase(row_ - 1, column) != caseValue || this.getCase(row_ - 1, column) == 0))) {
-                    this.setCase(row, column, 0);
-                    this.setCase(row_, column, caseValue);
-
-                } else {
-                    this.setCase(row, column, 0);
-                    this.setCase(row_, column, -1);
-                    this.setCase(row_-1, column, caseValue*2);
+                    } else {
+                        this.setCase(row, column, 0);
+                        this.setCase(row_, column, -1);
+                        this.setCase(row_ - 1, column, caseValue * 2);
+                    }
                 }
 
                 //TODO: Add to AnimationUtils a VectorMovement
@@ -82,9 +83,10 @@ public class Game2048 {
                     row_++;
                 }
 
-                if (this.getCase(row_, column) == -1 || (this.getCase(row_, column) == 0 && (this.getCase(row_ + 1, column) != caseValue || this.getCase(row_ + 1, column) == 0))) {
+                if (this.getCase(row_, column) == -1 || (this.getCase(row_, column) == 0 && this.getCase(row_ + 1, column) != caseValue)) {
+
                     this.setCase(row, column, 0);
-                    this.setCase(row_, column, caseValue);
+                    this.setCase(row_ + (this.getCase(row_ + 1, column) == 0 ? 1 : 0), column, caseValue);
 
                 } else {
                     this.setCase(row_, column, -1);
