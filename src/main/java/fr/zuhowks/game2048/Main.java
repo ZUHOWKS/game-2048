@@ -50,8 +50,11 @@ public class Main {
         game2048.moveRight();
         System.out.println(game2048);
 
+        System.out.println("Score: " + game2048.getScore());
+
 
         game2048.resetGrid();
+        game2048.resetScore();
 
         System.out.println("Test 2");
         System.out.println("------");
@@ -82,6 +85,8 @@ public class Main {
         System.out.println(game2048);
         game2048.moveDown();
         System.out.println(game2048);
+
+        System.out.println("Score: " + game2048.getScore());
 
     }
 }
