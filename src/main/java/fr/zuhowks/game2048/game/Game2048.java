@@ -5,14 +5,28 @@ import java.util.Arrays;
 public class Game2048 {
 
     private final int[][] grid;  // grid[row][column]
+    private int score;
 
     public Game2048() {
         this.grid = new int[4][4];
+        this.score = 0;
         resetGrid();
     }
 
     private int[][] getGrid() {
         return grid;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void resetScore() {
+        this.score = 0;
+    }
+
+    public void addScore(int toAdd) {
+        this.score+=toAdd;
     }
 
     public void resetGrid() {
@@ -67,7 +81,11 @@ public class Game2048 {
                     } else {
                         this.setBox(row, column, 0);
                         this.setBox(row_, column, -1);
-                        this.setBox(row_ - 1, column, boxValue * 2);
+
+                        int newValue = boxValue * 2;
+                        this.setBox(row_ - 1, column, newValue);
+
+                        this.addScore(newValue);
                     }
 
                     //TODO: Add to AnimationUtils a VectorMovement
@@ -103,7 +121,11 @@ public class Game2048 {
                     } else {
                         this.setBox(row, column, 0);
                         this.setBox(row_, column, -1);
-                        this.setBox(row_ + 1, column, boxValue*2);
+
+                        int newValue = boxValue * 2;
+                        this.setBox(row_ + 1, column, newValue);
+
+                        this.addScore(newValue);
                     }
 
                     //TODO: Add to AnimationUtils a VectorMovement
@@ -137,7 +159,11 @@ public class Game2048 {
                     } else {
                         this.setBox(row, column, 0);
                         this.setBox(row, column_, -1);
-                        this.setBox(row, column_ + 1, boxValue * 2);
+
+                        int newValue = boxValue * 2;
+                        this.setBox(row, column_ + 1, newValue);
+
+                        this.addScore(newValue);
                     }
 
                     //TODO: Add to AnimationUtils a VectorMovement
@@ -170,7 +196,12 @@ public class Game2048 {
                     } else {
                         this.setBox(row, column, 0);
                         this.setBox(row, column_, -1);
-                        this.setBox(row, column_ - 1, boxValue * 2);
+
+                        int newValue = boxValue * 2;
+                        this.setBox(row, column_ - 1, newValue);
+
+                        this.addScore(newValue);
+
                     }
 
                     //TODO: Add to AnimationUtils a VectorMovement
