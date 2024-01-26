@@ -1,4 +1,4 @@
-package fr.zuhowks.game2048.game;
+package fr.zuhowks.game2048.game.server;
 
 import java.util.Arrays;
 

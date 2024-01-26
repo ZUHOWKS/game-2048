@@ -1,6 +1,6 @@
-package fr.zuhowks.game2048.game;
+package fr.zuhowks.game2048.game.server;
 
-import fr.zuhowks.game2048.game.stats.GameStatus;
+import fr.zuhowks.game2048.game.server.stats.GameStatus;
 
 public class GameManager {
 
