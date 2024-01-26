@@ -1,6 +1,7 @@
 package fr.zuhowks.game2048.game;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Game2048 {
 
@@ -9,7 +10,10 @@ public class Game2048 {
     public Game2048() {
         this.grid = new int[4][4];
         resetGrid();
+    }
 
+    private int[][] getGrid() {
+        return grid;
     }
 
     public void resetGrid() {
@@ -178,13 +182,66 @@ public class Game2048 {
         resetCancelFusion();
     }
 
-    public void resetCancelFusion() {
+    private void resetCancelFusion() {
         for (int row=0; row<4; row++) {
             for (int column=0; column<4; column++) {
                 if (this.getBox(row, column) == -1) {
                     this.setBox(row, column, 0);
                 }
             }
+        }
+    }
+
+    public boolean canGenerateRandomBox() {
+        for (int row=0; row<4; row++) {
+            for (int column=0; column<4; column++) {
+                if (this.grid[row][column] == 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void generateRandomBox() {
+        int value = 1;
+        int row = 0;
+        int column = 0;
+        while (value != 0) {
+            row = (int) (Math.random() * 4);
+            column = (int) (Math.random() * 4);
+            value = this.getBox(row, column);
+        }
+
+        this.setBox(row, column, 2);
+
+        //TODO: Return with AnimationUtils a VectorMovement
+    }
+
+    public boolean canPlay() {
+
+        if (!canGenerateRandomBox()) {
+            // Create game 2048 and copy the grid
+            Game2048 gamePredicated = new Game2048();
+            gamePredicated.copyGrid(this.grid);
+
+            // Try all movement action
+            gamePredicated.moveUp();
+            gamePredicated.moveRight();
+            gamePredicated.moveDown();
+            gamePredicated.moveLeft();
+
+            return !(Arrays.deepEquals(this.getGrid(), gamePredicated.getGrid()));
+
+        } else {
+            return true;
+        }
+    }
+
+    private void copyGrid(int[][] grid) {
+        for (int row=0; row<4; row++) {
+            System.arraycopy(grid[row], 0, this.grid[row], 0, 4);
         }
     }
 
