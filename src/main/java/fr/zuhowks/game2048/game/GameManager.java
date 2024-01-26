@@ -4,25 +4,75 @@ import fr.zuhowks.game2048.game.stats.GameStatus;
 
 public class GameManager {
 
-    private GameStatus isInGame;
+    private GameStatus gameStatus;
     private Game2048 game2048;
 
     public GameManager() {
-        this.isInGame = GameStatus.NOT_IN_GAME;
+        this.gameStatus = GameStatus.NOT_IN_GAME;
         this.game2048 = new Game2048();
     }
 
     public GameManager(Game2048 game2048) {
-        this.isInGame = GameStatus.NOT_IN_GAME;
+        this.gameStatus = GameStatus.NOT_IN_GAME;
         this.game2048 = game2048;
     }
 
-    public GameStatus getIsInGame() {
-        return isInGame;
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    public void performAction(String cmd) {
+        if (this.getGameStatus() == GameStatus.IN_GAME) {
+            if (nextPlay()) {
+                switch (cmd) {
+                    case "moveUp": {
+                        this.game2048.moveUp();
+                    }
+
+                    case "moveDown": {
+                        this.game2048.moveDown();
+                    }
+
+                    case "moveRight": {
+                        this.game2048.moveRight();
+                    }
+
+                    case "moveLeft": {
+                        this.game2048.moveLeft();
+                    }
+                }
+            }
+        }
+
+        //TODO: Action possible in the another game status.
+
     }
 
     public void startParty() {
-        //TODO: Setup party
-        this.isInGame = GameStatus.IN_GAME;
+        this.game2048.resetGrid();
+        this.game2048.resetScore();
+        this.game2048.generateRandomBox();
+
+        this.gameStatus = GameStatus.IN_GAME;
+    }
+
+    public boolean nextPlay() {
+        if (this.game2048.isGridFinished()) {
+            this.gameStatus = GameStatus.WIN;
+        } else if (this.game2048.canPlay()) {
+            if (this.game2048.canGenerateRandomBox()) {
+                this.game2048.generateRandomBox();
+            }
+
+            return true;
+        } else {
+            this.gameStatus = GameStatus.LOOSE;
+        }
+
+        return false;
+    }
+
+    public void leaveParty() {
+        this.gameStatus = GameStatus.NOT_IN_GAME;
     }
 }
