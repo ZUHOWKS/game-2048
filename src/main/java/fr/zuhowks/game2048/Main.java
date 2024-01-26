@@ -2,6 +2,8 @@ package fr.zuhowks.game2048;
 
 import fr.zuhowks.game2048.game.Game2048;
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -11,6 +13,8 @@ public class Main {
 
     private static void devGame2048() {
         Game2048 game2048 = new Game2048();
+
+        System.out.println();
 
         System.out.println("Test 1");
         System.out.println("------");
@@ -31,7 +35,14 @@ public class Main {
         game2048.setBox(0,3, 4);
         game2048.setBox(1,3, 2);
 
+        System.out.println("Can play ? " + game2048.canPlay());
+
         System.out.println(game2048);
+
+        game2048.generateRandomBox();
+
+        System.out.println(game2048);
+
         game2048.moveUp();
         System.out.println(game2048);
         game2048.moveDown();
