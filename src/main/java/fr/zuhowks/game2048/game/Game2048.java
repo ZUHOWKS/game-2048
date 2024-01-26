@@ -20,11 +20,11 @@ public class Game2048 {
         }
     }
 
-    public int getCase(int row, int column) {
+    public int getBox(int row, int column) {
         return this.grid[row][column];
     }
 
-    public void setCase(int row, int column, int value) {
+    public void setBox(int row, int column, int value) {
         this.grid[row][column] = value;
     }
 
@@ -47,27 +47,36 @@ public class Game2048 {
 
         for (int column=0; column<4; column++) {
             for (int row=1; row<4; row++) {
-                final int caseValue = this.getCase(row, column);
-                int row_ = row;
-                if (caseValue > 0) {
-                    while (!(this.getCase(row_, column) == -1 || (row_ == 1) || (this.getCase(row_, column) == 0 && this.getCase(row_ - 1, column) >= 0))) {
+                final int boxValue = this.getBox(row, column);
+
+                if (boxValue > 0) {
+                    int row_ = row;
+
+                    // check not isCancelFusionBox || isTheLimit || isBoxDefined
+                    while (!(this.getBox(row_, column) == -1 || (row_ == 1) || (this.getBox(row_ - 1, column) > 0))) {
                         row_--;
                     }
 
-                    if (this.getCase(row_, column) == -1 || ((this.getCase(row_, column) == 0 || row == row_) && this.getCase(row_ - 1, column) != caseValue)) {
-                        this.setCase(row, column, 0);
-                        this.setCase(row_ - (this.getCase(row_ - 1, column) == 0 ? 1 : 0), column, caseValue);
+                    if (this.getBox(row_, column) == -1 || ((this.getBox(row_, column) == 0 || row == row_) && this.getBox(row_ - 1, column) != boxValue)) {
+                        this.setBox(row, column, 0);
+                        this.setBox(row_ - (this.getBox(row_ - 1, column) == 0 ? 1 : 0), column, boxValue);
 
                     } else {
-                        this.setCase(row, column, 0);
-                        this.setCase(row_, column, -1);
-                        this.setCase(row_ - 1, column, caseValue * 2);
+                        this.setBox(row, column, 0);
+                        this.setBox(row_, column, -1);
+                        this.setBox(row_ - 1, column, boxValue * 2);
                     }
+
+                    //TODO: Add to AnimationUtils a VectorMovement
                 }
 
-                //TODO: Add to AnimationUtils a VectorMovement
+
             }
         }
+
+        resetCancelFusion();
+
+
     }
 
     public void moveDown() {
@@ -76,24 +85,41 @@ public class Game2048 {
 
         for (int column=0; column<4; column++) {
             for (int row=2; row>=0; row--) {
-                final int caseValue = this.getCase(row, column);
-                int row_ = row;
+                final int boxValue = this.getBox(row, column);
 
-                while (!(this.getCase(row_, column) == -1 || (row_ == 2) || (this.getCase(row_, column) == 3 && this.getCase(row_ + 1, column) > 0))) {
-                    row_++;
+                if (boxValue > 0) {
+                    int row_ = row;
+                    // check not isCancelFusionBox || isTheLimit || isBoxDefined
+                    while (!(this.getBox(row_, column) == -1 || (row_ == 2) || (this.getBox(row_ + 1, column) > 0))) {
+                        row_++;
+                    }
+
+                    if (this.getBox(row_, column) == -1 || ((this.getBox(row_, column) == 0 || row == row_) && this.getBox(row_ + 1, column) != boxValue)) {
+
+                        this.setBox(row, column, 0);
+                        this.setBox(row_ + (this.getBox(row_ + 1, column) == 0 ? 1 : 0), column, boxValue);
+
+                    } else {
+                        this.setBox(row, column, 0);
+                        this.setBox(row_, column, -1);
+                        this.setBox(row_+1, column, boxValue*2);
+                    }
+
+                    //TODO: Add to AnimationUtils a VectorMovement
                 }
 
-                if (this.getCase(row_, column) == -1 || (this.getCase(row_, column) == 0 && this.getCase(row_ + 1, column) != caseValue)) {
+            }
+        }
 
-                    this.setCase(row, column, 0);
-                    this.setCase(row_ + (this.getCase(row_ + 1, column) == 0 ? 1 : 0), column, caseValue);
+        resetCancelFusion();
+    }
 
-                } else {
-                    this.setCase(row_, column, -1);
-                    this.setCase(row_+1, column, caseValue*2);
+    public void resetCancelFusion() {
+        for (int row=0; row<4; row++) {
+            for (int column=0; column<4; column++) {
+                if (this.getBox(row, column) == -1) {
+                    this.setBox(row, column, 0);
                 }
-
-                //TODO: Add to AnimationUtils a VectorMovement
             }
         }
     }
@@ -104,7 +130,7 @@ public class Game2048 {
         for (int row=0; row<4; row++) {
             stringBuilder.append("[");
             for (int column=0; column<4; column++) {
-                String value = String.valueOf(this.getCase(row, column));
+                String value = String.valueOf(this.getBox(row, column));
                 int space = 5 - value.length();
                 while (space > 0) {
                     stringBuilder.append(" ");
