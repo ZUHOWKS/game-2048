@@ -2,8 +2,6 @@ package fr.zuhowks.game2048;
 
 import fr.zuhowks.game2048.game.Game2048;
 
-import java.util.Arrays;
-
 public class Main {
 
     public static void main(String[] args) {

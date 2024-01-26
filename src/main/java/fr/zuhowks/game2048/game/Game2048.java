@@ -1,7 +1,6 @@
 package fr.zuhowks.game2048.game;
 
 import java.util.Arrays;
-import java.util.Random;
 
 public class Game2048 {
 
