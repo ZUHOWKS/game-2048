@@ -1,4 +1,4 @@
-package fr.zuhowks;
+package fr.zuhowks.game2048;
 
 public class Main {
 
