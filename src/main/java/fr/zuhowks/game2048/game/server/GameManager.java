@@ -1,15 +1,18 @@
 package fr.zuhowks.game2048.game.server;
 
+import fr.zuhowks.game2048.game.client.ClientGame;
 import fr.zuhowks.game2048.game.server.stats.GameStatus;
 
 public class GameManager {
 
     private GameStatus gameStatus;
     private Game2048 game2048;
+    private ClientGame clientGame;
 
     public GameManager() {
         this.gameStatus = GameStatus.NOT_IN_GAME;
         this.game2048 = new Game2048();
+        this.clientGame = new ClientGame();
     }
 
     public GameManager(Game2048 game2048) {
@@ -41,6 +44,8 @@ public class GameManager {
                         this.game2048.moveLeft();
                     }
                 }
+
+                this.clientGame.update(this.game2048.getGridCopy());
             }
         }
 
@@ -74,5 +79,9 @@ public class GameManager {
 
     public void leaveParty() {
         this.gameStatus = GameStatus.NOT_IN_GAME;
+    }
+
+    public ClientGame getClientGame() {
+        return clientGame;
     }
 }

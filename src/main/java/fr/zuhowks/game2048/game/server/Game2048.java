@@ -294,4 +294,14 @@ public class Game2048 {
 
         return stringBuilder.toString();
     }
+
+    public int[][] getGridCopy() {
+        int[][] grid = new int[4][4];
+
+        for (int row=0; row<4; row++) {
+            System.arraycopy(this.grid[row], 0, grid[row], 0, 4);
+        }
+
+        return grid;
+    }
 }
