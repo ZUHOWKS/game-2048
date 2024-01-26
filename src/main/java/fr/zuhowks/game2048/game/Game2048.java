@@ -75,8 +75,6 @@ public class Game2048 {
         }
 
         resetCancelFusion();
-
-
     }
 
     public void moveDown() {
@@ -102,12 +100,78 @@ public class Game2048 {
                     } else {
                         this.setBox(row, column, 0);
                         this.setBox(row_, column, -1);
-                        this.setBox(row_+1, column, boxValue*2);
+                        this.setBox(row_ + 1, column, boxValue*2);
                     }
 
                     //TODO: Add to AnimationUtils a VectorMovement
                 }
 
+            }
+        }
+
+        resetCancelFusion();
+    }
+
+    public void moveRight() {
+
+        //TODO: Create AnimationUtils for listed VectorMovement
+        for (int row=0; row<4; row++) {
+            for (int column=2; column>=0; column--) {
+                final int boxValue = this.getBox(row, column);
+
+                if (boxValue > 0) {
+                    int column_ = column;
+
+                    // check not isCancelFusionBox || isTheLimit || isBoxDefined
+                    while (!(this.getBox(row, column_) == -1 || (column_ == 2) || (this.getBox(row, column_ + 1) > 0))) {
+                        column_++;
+                    }
+
+                    if (this.getBox(row, column_) == -1 || ((this.getBox(row, column_) == 0 || column == column_) && this.getBox(row, column_ + 1) != boxValue)) {
+                        this.setBox(row, column, 0);
+                        this.setBox(row, column_ + (this.getBox(row, column_ + 1) == 0 ? 1 : 0), boxValue);
+
+                    } else {
+                        this.setBox(row, column, 0);
+                        this.setBox(row, column_, -1);
+                        this.setBox(row, column_ + 1, boxValue * 2);
+                    }
+
+                    //TODO: Add to AnimationUtils a VectorMovement
+                }
+            }
+        }
+
+        resetCancelFusion();
+    }
+
+    public void moveLeft() {
+
+        //TODO: Create AnimationUtils for listed VectorMovement
+        for (int row=0; row<4; row++) {
+            for (int column=1; column<4; column++) {
+                final int boxValue = this.getBox(row, column);
+
+                if (boxValue > 0) {
+                    int column_ = column;
+
+                    // check not isCancelFusionBox || isTheLimit || isBoxDefined
+                    while (!(this.getBox(row, column_) == -1 || (column_ == 1) || (this.getBox(row, column_ - 1) > 0))) {
+                        column_--;
+                    }
+
+                    if (this.getBox(row, column_) == -1 || ((this.getBox(row, column_) == 0 || column == column_) && this.getBox(row, column_ - 1) != boxValue)) {
+                        this.setBox(row, column, 0);
+                        this.setBox(row, column_ - (this.getBox(row, column_ - 1) == 0 ? 1 : 0), boxValue);
+
+                    } else {
+                        this.setBox(row, column, 0);
+                        this.setBox(row, column_, -1);
+                        this.setBox(row, column_ - 1, boxValue * 2);
+                    }
+
+                    //TODO: Add to AnimationUtils a VectorMovement
+                }
             }
         }
 
