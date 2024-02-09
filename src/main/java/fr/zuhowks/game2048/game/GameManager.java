@@ -1,23 +1,24 @@
-package fr.zuhowks.game2048.game.server;
+package fr.zuhowks.game2048.game;
 
 import fr.zuhowks.game2048.game.client.ClientGame;
+import fr.zuhowks.game2048.game.server.ServerGame;
 import fr.zuhowks.game2048.game.server.stats.GameStatus;
 
 public class GameManager {
 
     private GameStatus gameStatus;
-    private Game2048 game2048;
+    private ServerGame serverGame;
     private ClientGame clientGame;
 
     public GameManager() {
         this.gameStatus = GameStatus.NOT_IN_GAME;
-        this.game2048 = new Game2048();
+        this.serverGame = new ServerGame();
         this.clientGame = new ClientGame();
     }
 
-    public GameManager(Game2048 game2048) {
+    public GameManager(ServerGame serverGame) {
         this.gameStatus = GameStatus.NOT_IN_GAME;
-        this.game2048 = game2048;
+        this.serverGame = serverGame;
     }
 
     public GameStatus getGameStatus() {
@@ -29,23 +30,23 @@ public class GameManager {
             if (nextPlay()) {
                 switch (cmd) {
                     case "moveUp": {
-                        this.game2048.moveUp();
+                        this.serverGame.moveUp();
                     }
 
                     case "moveDown": {
-                        this.game2048.moveDown();
+                        this.serverGame.moveDown();
                     }
 
                     case "moveRight": {
-                        this.game2048.moveRight();
+                        this.serverGame.moveRight();
                     }
 
                     case "moveLeft": {
-                        this.game2048.moveLeft();
+                        this.serverGame.moveLeft();
                     }
                 }
 
-                this.clientGame.update(this.game2048.getGridCopy());
+                this.clientGame.update(this.serverGame.getGridCopy());
             }
         }
 
@@ -54,19 +55,19 @@ public class GameManager {
     }
 
     public void startParty() {
-        this.game2048.resetGrid();
-        this.game2048.resetScore();
-        this.game2048.generateRandomBox();
+        this.serverGame.resetGrid();
+        this.serverGame.resetScore();
+        this.serverGame.generateRandomBox();
 
         this.gameStatus = GameStatus.IN_GAME;
     }
 
     public boolean nextPlay() {
-        if (this.game2048.isGridFinished()) {
+        if (this.serverGame.isGridFinished()) {
             this.gameStatus = GameStatus.WIN;
-        } else if (this.game2048.canPlay()) {
-            if (this.game2048.canGenerateRandomBox()) {
-                this.game2048.generateRandomBox();
+        } else if (this.serverGame.canPlay()) {
+            if (this.serverGame.canGenerateRandomBox()) {
+                this.serverGame.generateRandomBox();
             }
 
             return true;
