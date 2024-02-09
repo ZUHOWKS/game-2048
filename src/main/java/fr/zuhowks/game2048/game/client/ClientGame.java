@@ -1,18 +1,18 @@
 package fr.zuhowks.game2048.game.client;
 
+import fr.zuhowks.game2048.game.Game2048;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ClientGame {
-
-    private int[][] grid;
+public class ClientGame extends Game2048 {
     private PropertyChangeSupport pcs;
 
     public ClientGame() {
         super();
-        this.grid = new int[4][4];
         this.pcs = new PropertyChangeSupport(this);
     }
+
 
     public void update(int[][] grid) {
         int[][] oldGrid = new int[4][4];
@@ -26,10 +26,8 @@ public class ClientGame {
         this.pcs.firePropertyChange("grid", oldGrid, this.grid);
     }
 
-    private void copyGrid(int[][] grid) {
-        for (int row=0; row<4; row++) {
-            System.arraycopy(grid[row], 0, this.grid[row], 0, 4);
-        }
+    public int[][] getGrid() {
+        return grid;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

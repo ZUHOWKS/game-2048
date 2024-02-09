@@ -1,25 +1,17 @@
 package fr.zuhowks.game2048.game.server;
 
+import fr.zuhowks.game2048.game.Game2048;
+
 import java.util.Arrays;
 
-public class Game2048 {
+public class ServerGame extends Game2048 {
 
-    private final int[][] grid;  // grid[row][column]
-    private int score;
 
-    public Game2048() {
-        this.grid = new int[4][4];
-        this.score = 0;
+    public ServerGame() {
+        super();
         resetGrid();
     }
 
-    private int[][] getGrid() {
-        return grid;
-    }
-
-    public int getScore() {
-        return score;
-    }
 
     public void resetScore() {
         this.score = 0;
@@ -35,10 +27,6 @@ public class Game2048 {
                 this.grid[row][column] = 0;
             }
         }
-    }
-
-    public int getBox(int row, int column) {
-        return this.grid[row][column];
     }
 
     public void setBox(int row, int column, int value) {
@@ -253,7 +241,7 @@ public class Game2048 {
 
         if (!canGenerateRandomBox()) {
             // Create game 2048 and copy the grid
-            Game2048 gamePredicated = new Game2048();
+            ServerGame gamePredicated = new ServerGame();
             gamePredicated.copyGrid(this.grid);
 
             // Try all movement action
@@ -269,39 +257,5 @@ public class Game2048 {
         }
     }
 
-    private void copyGrid(int[][] grid) {
-        for (int row=0; row<4; row++) {
-            System.arraycopy(grid[row], 0, this.grid[row], 0, 4);
-        }
-    }
 
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int row=0; row<4; row++) {
-            stringBuilder.append("[");
-            for (int column=0; column<4; column++) {
-                String value = String.valueOf(this.getBox(row, column));
-                int space = 5 - value.length();
-                while (space > 0) {
-                    stringBuilder.append(" ");
-                    space--;
-                }
-                stringBuilder.append(value).append(" ");
-            }
-            stringBuilder.append("]\n");
-        }
-
-        return stringBuilder.toString();
-    }
-
-    public int[][] getGridCopy() {
-        int[][] grid = new int[4][4];
-
-        for (int row=0; row<4; row++) {
-            System.arraycopy(this.grid[row], 0, grid[row], 0, 4);
-        }
-
-        return grid;
-    }
 }
