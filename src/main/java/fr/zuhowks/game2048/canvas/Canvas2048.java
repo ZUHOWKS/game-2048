@@ -1,6 +1,7 @@
 package fr.zuhowks.game2048.canvas;
 
 import fr.zuhowks.game2048.game.GameManager;
+import fr.zuhowks.game2048.game.server.stats.GameStatus;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -31,6 +32,8 @@ public class Canvas2048 extends JPanel implements PropertyChangeListener {
     	this.game = game;
     	this.xDepart = 200;
     	this.yDepart = 200;
+
+		this.game.getClientGame().addPropertyChangeListener(this);
 
 		setupBoxColors();
 	}
@@ -91,7 +94,7 @@ public void textCenteredRect(int x, int y, double squareSize, double squareSize2
 	FontMetrics metrics = g2D.getFontMetrics();
     int textX = (int) (x + (squareSize - metrics.stringWidth(txtAffMax))/2);
     int textY = (int) (y + ((squareSize2 - metrics.getHeight())/2) + metrics.getAscent());
-    g2D.setColor(Color.BLACK);
+    g2D.setColor(Color.WHITE);
     g2D.drawString(txtAff, textX, textY);
 }
 
@@ -118,6 +121,7 @@ public void grille(int x, int y, Graphics2D g2D) {
 	x = 0;
 	y = 0;
 }
+
 public void score(int x, int y, int nbScore, Float sizeFont, Graphics2D g2D) {
 	String scoreAffMax = "Score: 99999";
 	g2D.setColor(new Color(186, 172, 159));
@@ -126,10 +130,10 @@ public void score(int x, int y, int nbScore, Float sizeFont, Graphics2D g2D) {
 	FontMetrics metrics = g2D.getFontMetrics();
 	g2D.setStroke(new BasicStroke(sizeFont));
 	g2D.fillRect(x, y, metrics.stringWidth(scoreAffMax)+10, metrics.getHeight());
-	if (nbScore <= 99999) {
+	if (nbScore <= 99999 && this.game.getGameStatus() == GameStatus.IN_GAME) {
 		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "Score: "+nbScore, g2D);
 	}
-	else {
+	else if (this.game.getGameStatus() != GameStatus.LOOSE || this.game.getGameStatus() != GameStatus.NOT_IN_GAME) {
 		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "You broke it !", g2D);
 	}
 	g2D.setFont(g2D.getFont().deriveFont(g2D.getFont().getSize() / sizeFont));
