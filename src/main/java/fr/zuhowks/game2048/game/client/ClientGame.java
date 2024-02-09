@@ -30,10 +30,6 @@ public class ClientGame extends Game2048 {
         this.pcs.firePropertyChange("score", oldScore, this.score);
     }
 
-    public int[][] getGrid() {
-        return grid;
-    }
-
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
     }
