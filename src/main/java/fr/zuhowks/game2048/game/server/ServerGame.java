@@ -238,9 +238,11 @@ public class ServerGame extends Game2048 {
                 }
             }
         }
+        if (!box.isEmpty()) {
+            int[] boxChooses = box.get((int) (Math.random() * (box.size() - 1)));
+            this.setBox(boxChooses[0], boxChooses[1], 2);
+        }
 
-        int[] boxChooses = box.get((int) (Math.random() * (box.size() - 1)));
-        this.setBox(boxChooses[0], boxChooses[1], 2);
 
         //TODO: Return with AnimationUtils a VectorMovement
     }
