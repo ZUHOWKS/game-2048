@@ -2,7 +2,9 @@ package fr.zuhowks.game2048.game.server;
 
 import fr.zuhowks.game2048.game.Game2048;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 public class ServerGame extends Game2048 {
 
@@ -210,6 +212,7 @@ public class ServerGame extends Game2048 {
         }
     }
 
+
     public boolean canGenerateRandomBox() {
         for (int row=0; row<4; row++) {
             for (int column=0; column<4; column++) {
@@ -223,16 +226,21 @@ public class ServerGame extends Game2048 {
     }
 
     public void generateRandomBox() {
-        int value = 1;
-        int row = 0;
-        int column = 0;
-        while (value != 0) {
-            row = (int) (Math.random() * 4);
-            column = (int) (Math.random() * 4);
-            value = this.getBox(row, column);
+
+        ArrayList<int[]> box = new ArrayList<>();
+        for (int row=0; row<4; row++) {
+            for (int column=0; column<4; column++) {
+                if (this.grid[row][column] == 0) {
+                    int[] pos = new int[2];
+                    pos[0] = row;
+                    pos[1] = column;
+                    box.add(pos);
+                }
+            }
         }
 
-        this.setBox(row, column, 2);
+        int[] boxChooses = box.get((int) (Math.random() * (box.size() - 1)));
+        this.setBox(boxChooses[0], boxChooses[1], 2);
 
         //TODO: Return with AnimationUtils a VectorMovement
     }
