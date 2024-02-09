@@ -20,6 +20,11 @@ public class KeyBoardCommandListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
         switch( keyCode ) {
             case KeyEvent.VK_UP:
@@ -35,10 +40,5 @@ public class KeyBoardCommandListener implements KeyListener {
                 game.performAction("moveRight");
                 break;
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 }
