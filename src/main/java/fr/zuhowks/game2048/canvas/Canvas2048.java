@@ -27,10 +27,10 @@ public class Canvas2048 extends JPanel implements PropertyChangeListener {
     public Canvas2048(GameManager game) {
 
 
-    	this.boxTaille =400;
+    	this.boxTaille = 400;
     	this.game = game;
-    	this.xDepart = 0;
-    	this.yDepart = 0;
+    	this.xDepart = 200;
+    	this.yDepart = 200;
 
 		setupBoxColors();
 	}
@@ -54,11 +54,11 @@ public class Canvas2048 extends JPanel implements PropertyChangeListener {
 protected void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	Graphics2D g2D = (Graphics2D) g;
+	score(200, 0, this.game.getClientGame().getScore(), 5F, g2D);
 	grille(0, 0, g2D);
-	score(0, 500, this.game.getClientGame().getScore(), 5F, g2D);
 }
 public RoundRectangle2D createRoundedRect(int x, int y, double w, double h, Graphics g2D) {
-    return new RoundRectangle2D.Double(x, y, w, h, 15, 15);
+    return new RoundRectangle2D.Double(x, y, w, h, 7.5, 7.5);
 }
 
 
@@ -72,14 +72,18 @@ public RoundRectangle2D createRoundedRect(int x, int y, double w, double h, Grap
 	 */
 public void generateBox(int x, int y, Graphics2D g2D, int nb) {
 	
-	double squareSize = (double) (9 * boxTaille) /40;
+	double squareSize = (double) (9 * boxTaille) / 40;
 	String numberAff = ""+nb;
 	float sizeFont = (float) (squareSize/60);
 	
 	g2D.setColor(colorBoxes.get(nb));
 	g2D.fill(createRoundedRect(x, y, squareSize, squareSize, g2D));
 	g2D.setFont(g2D.getFont().deriveFont(g2D.getFont().getSize() * sizeFont));
-	textCenteredRect(x, y, squareSize, squareSize, numberAff, numberAff, g2D);
+
+	if (nb > 0) {
+		textCenteredRect(x, y, squareSize, squareSize, numberAff, numberAff, g2D);
+	}
+
 	g2D.setFont(g2D.getFont().deriveFont(g2D.getFont().getSize() / sizeFont));
     
 }
@@ -95,7 +99,7 @@ public void grille(int x, int y, Graphics2D g2D) {
 	int spaceLines = boxTaille/40;
 	int jumpBoxes = boxTaille/4;
 	
-	g2D.setColor(Color.DARK_GRAY);
+	g2D.setColor(new Color(186, 172, 159));
 	g2D.fill(createRoundedRect(xDepart, yDepart, boxTaille + spaceLines, boxTaille + spaceLines, g2D));
 
 	int[][] grilleClient = this.game.getClientGame().getGridCopy();
@@ -118,9 +122,10 @@ public void score(int x, int y, int nbScore, Float sizeFont, Graphics2D g2D) {
 	String scoreAffMax = "Score: 99999";
 	g2D.setColor(new Color(186, 172, 159));
 	g2D.setFont(g2D.getFont().deriveFont(g2D.getFont().getSize() * sizeFont));
+
 	FontMetrics metrics = g2D.getFontMetrics();
 	g2D.setStroke(new BasicStroke(sizeFont));
-	g2D.drawRect(x, y, metrics.stringWidth(scoreAffMax)+10, metrics.getHeight());
+	g2D.fillRect(x, y, metrics.stringWidth(scoreAffMax)+10, metrics.getHeight());
 	if (nbScore <= 99999) {
 		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "Score: "+nbScore, g2D);
 	}
