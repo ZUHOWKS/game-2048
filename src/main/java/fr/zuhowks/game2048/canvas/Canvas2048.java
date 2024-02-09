@@ -1,4 +1,6 @@
-package fr.zuhowks.game2048;
+package fr.zuhowks.game2048.canvas;
+
+import fr.zuhowks.game2048.game.GameManager;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -9,28 +11,20 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Canvas2048 extends JPanel{
 	
     //private final Jeu2048 jeu;
     private final int boxTaille; //reference Ã  la dicipline
-    private final Jeu2048 jeu;
+    private final GameManager game;
     int xDepart;
     int yDepart;
     Map<Integer, Color> colorBoxes = new HashMap<>();
-    protected int[][] board = {
-    		{2,4,8,16},
-    		{32,64,128,256},
-    		{512,1024,2048,0},
-    		{0,0,0,0},
-	};
-    int nbScore = 999999;
     
-    public Canvas2048(Jeu2048 jeu) {
+    public Canvas2048(GameManager game) {
     	this.boxTaille =400;
-    	this.jeu = jeu;
+    	this.game = game;
     	this.xDepart = 0;
     	this.yDepart = 0;
     	this.colorBoxes.put(0, Color.LIGHT_GRAY);
@@ -52,19 +46,16 @@ protected void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	Graphics2D g2D = (Graphics2D) g;
 	grille(0, 0, g2D);
-	score(0, 500, nbScore, 5F, g2D);
+	score(0, 500, this.game.getClientGame().getScore(), 5F, g2D);
 }
 public RoundRectangle2D createRoundedRect(int x, int y, double w, double h, Graphics g2D) {
-	
-	RoundRectangle2D roundedRectangle = new RoundRectangle2D.Double(x, y, w, h, 15, 15);
-	return roundedRectangle;
+    return new RoundRectangle2D.Double(x, y, w, h, 15, 15);
 }
 public void Boxes(int x, int y, Graphics2D g2D, int nb) {
 	
 	double squareSize = 9*boxTaille/40;
 	String numberAff = ""+nb;
 	float sizeFont = (float) (squareSize/60);
-	System.out.println(sizeFont);
 	
 	g2D.setColor(colorBoxes.get(nb));
 	g2D.fill(createRoundedRect(x, y, squareSize, squareSize, g2D));
@@ -87,13 +78,15 @@ public void grille(int x, int y, Graphics2D g2D) {
 	
 	g2D.setColor(Color.DARK_GRAY);
 	g2D.fill(createRoundedRect(xDepart, yDepart, boxTaille + spaceLines, boxTaille + spaceLines, g2D));
+
+	int[][] grilleClient = this.game.getClientGame().getGridCopy();
 	
 	x = xDepart + spaceLines;
 	y += yDepart + spaceLines;
-	
+
 	for(int i = 0; i < 4; i++) {
 		for(int j = 0; j < 4; j++) {
-			Boxes(x, y, g2D, board[i][j]);
+			Boxes(x, y, g2D, grilleClient[i][j]);
 			x += jumpBoxes;	
 		}
 		x = xDepart + spaceLines;
