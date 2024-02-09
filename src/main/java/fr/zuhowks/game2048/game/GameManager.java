@@ -35,25 +35,31 @@ public class GameManager {
         if (this.getGameStatus() == GameStatus.IN_GAME) {
             if (nextPlay()) {
                 switch (cmd) {
-                    case "moveUp": {
+                    case "moveUp":
                         this.serverGame.moveUp();
-                    }
+                        break;
 
-                    case "moveDown": {
+                    case "moveDown":
                         this.serverGame.moveDown();
-                    }
+                        break;
 
-                    case "moveRight": {
+                    case "moveRight":
                         this.serverGame.moveRight();
-                    }
+                        break;
 
-                    case "moveLeft": {
+                    case "moveLeft":
                         this.serverGame.moveLeft();
-                    }
+                        break;
                 }
+
+                this.serverGame.generateRandomBox();
                 updateGameStatus();
-                this.clientGame.update(this.serverGame.getGridCopy(), this.serverGame.getScore());
+                this.clientGame.update(this.serverGame.getGrid(), this.serverGame.getScore());
+            } else {
+                this.gameStatus = GameStatus.LOOSE;
             }
+
+
         }
 
 
@@ -65,7 +71,6 @@ public class GameManager {
     public void startParty() {
         this.serverGame.resetGrid();
         this.serverGame.resetScore();
-        this.serverGame.generateRandomBox();
 
         GameStatus oldStatus = this.gameStatus;
         this.gameStatus = GameStatus.IN_GAME;
@@ -76,10 +81,6 @@ public class GameManager {
         if (this.serverGame.isGridFinished()) {
             this.gameStatus = GameStatus.WIN;
         } else if (this.serverGame.canPlay()) {
-            if (this.serverGame.canGenerateRandomBox()) {
-                this.serverGame.generateRandomBox();
-            }
-
             return true;
         } else {
             this.gameStatus = GameStatus.LOOSE;
@@ -106,6 +107,10 @@ public class GameManager {
 
     public ClientGame getClientGame() {
         return clientGame;
+    }
+
+    public ServerGame getServerGame() {
+        return serverGame;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
