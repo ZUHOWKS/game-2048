@@ -28,17 +28,17 @@ public class Canvas2048 extends JPanel{
     	this.xDepart = 0;
     	this.yDepart = 0;
     	this.colorBoxes.put(0, Color.LIGHT_GRAY);
-    	this.colorBoxes.put(2, new Color(224,224,224));
-    	this.colorBoxes.put(4, new Color(255, 229, 204));
-    	this.colorBoxes.put(8, new Color(255, 178, 102));
-    	this.colorBoxes.put(16, new Color(255, 153, 51));
-    	this.colorBoxes.put(32, new Color(255, 102, 102));
-    	this.colorBoxes.put(64, new Color(255, 0, 0));
-    	this.colorBoxes.put(128, new Color(255, 255, 153));
-    	this.colorBoxes.put(256, new Color(255, 255, 102));
-    	this.colorBoxes.put(512, new Color(235, 220, 100));
-    	this.colorBoxes.put(1024, new Color(230, 205, 85));
-    	this.colorBoxes.put(2048, new Color(230, 195, 20));
+    	this.colorBoxes.put(2, new Color(237, 227, 217));
+    	this.colorBoxes.put(4, new Color(234, 223, 200));
+    	this.colorBoxes.put(8, new Color(240, 177, 123));
+    	this.colorBoxes.put(16, new Color(242, 148, 102));
+    	this.colorBoxes.put(32, new Color(243, 123, 97));
+    	this.colorBoxes.put(64, new Color(243, 93, 60));
+    	this.colorBoxes.put(128, new Color(235, 205, 113));
+    	this.colorBoxes.put(256, new Color(235, 203, 97));
+    	this.colorBoxes.put(512, new Color(234, 199, 80));
+    	this.colorBoxes.put(1024, new Color(237, 196, 63));
+    	this.colorBoxes.put(2048, new Color(237, 194, 46));
     }
 
 @Override
