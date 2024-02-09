@@ -143,7 +143,7 @@ public void score(int x, int y, int nbScore, Float sizeFont, Graphics2D g2D) {
 	else if (this.game.getGameStatus() == GameStatus.WIN) {
 		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "You broke it !", g2D, new Color(247, 244, 240));
 	} else if (this.game.getGameStatus() == GameStatus.LOOSE) {
-		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "You loose ;(", g2D, new Color(247, 244, 240));
+		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "You loose ^^'	", g2D, new Color(247, 244, 240));
 	}
 	g2D.setFont(g2D.getFont().deriveFont(g2D.getFont().getSize() / sizeFont));
 	
