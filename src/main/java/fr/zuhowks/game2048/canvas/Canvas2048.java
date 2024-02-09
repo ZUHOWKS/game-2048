@@ -23,7 +23,7 @@ public class Canvas2048 extends JPanel implements PropertyChangeListener {
     private final GameManager game;
     int xDepart;
     int yDepart;
-    Map<Integer, Color> colorBoxes = new HashMap<>();
+    Map<Integer, Color> boxColors = new HashMap<>();
     
     public Canvas2048(GameManager game) {
 
@@ -39,18 +39,18 @@ public class Canvas2048 extends JPanel implements PropertyChangeListener {
 	}
 
 	private void setupBoxColors() {
-		this.colorBoxes.put(0, new Color(203, 191, 178));
-		this.colorBoxes.put(2, new Color(237, 227, 217));
-		this.colorBoxes.put(4, new Color(234, 223, 200));
-		this.colorBoxes.put(8, new Color(240, 177, 123));
-		this.colorBoxes.put(16, new Color(242, 148, 102));
-		this.colorBoxes.put(32, new Color(243, 123, 97));
-		this.colorBoxes.put(64, new Color(243, 93, 60));
-		this.colorBoxes.put(128, new Color(235, 205, 113));
-		this.colorBoxes.put(256, new Color(235, 203, 97));
-		this.colorBoxes.put(512, new Color(234, 199, 80));
-		this.colorBoxes.put(1024, new Color(237, 196, 63));
-		this.colorBoxes.put(2048, new Color(237, 194, 46));
+		this.boxColors.put(0, new Color(203, 191, 178));
+		this.boxColors.put(2, new Color(237, 227, 217));
+		this.boxColors.put(4, new Color(234, 223, 200));
+		this.boxColors.put(8, new Color(240, 177, 123));
+		this.boxColors.put(16, new Color(242, 148, 102));
+		this.boxColors.put(32, new Color(243, 123, 97));
+		this.boxColors.put(64, new Color(243, 93, 60));
+		this.boxColors.put(128, new Color(235, 205, 113));
+		this.boxColors.put(256, new Color(235, 203, 97));
+		this.boxColors.put(512, new Color(234, 199, 80));
+		this.boxColors.put(1024, new Color(237, 196, 63));
+		this.boxColors.put(2048, new Color(237, 194, 46));
 	}
 
 	@Override
@@ -77,24 +77,33 @@ public void generateBox(int x, int y, Graphics2D g2D, int nb) {
 	
 	double squareSize = (double) (9 * boxTaille) / 40;
 	String numberAff = ""+nb;
-	float sizeFont = (float) (squareSize/60);
-	
-	g2D.setColor(colorBoxes.get(nb));
+	float sizeFont = (float) (squareSize/30);
+	Color boxColor = boxColors.get(nb);
+	if (boxColor == null) {
+		boxColor = boxColors.get(0);
+	}
+
+	g2D.setColor(boxColor);
 	g2D.fill(createRoundedRect(x, y, squareSize, squareSize, g2D));
 	g2D.setFont(g2D.getFont().deriveFont(g2D.getFont().getSize() * sizeFont));
 
 	if (nb > 0) {
-		textCenteredRect(x, y, squareSize, squareSize, numberAff, numberAff, g2D);
+		if (nb < 8) {
+			textCenteredRect(x, y, squareSize, squareSize, numberAff, numberAff, g2D, new Color(118, 109, 101));
+		} else {
+			textCenteredRect(x, y, squareSize, squareSize, numberAff, numberAff, g2D, new Color(247, 244, 240));
+		}
+
 	}
 
 	g2D.setFont(g2D.getFont().deriveFont(g2D.getFont().getSize() / sizeFont));
     
 }
-public void textCenteredRect(int x, int y, double squareSize, double squareSize2, String txtAffMax, String txtAff, Graphics2D g2D){
+public void textCenteredRect(int x, int y, double squareSize, double squareSize2, String txtAffMax, String txtAff, Graphics2D g2D, Color color){
 	FontMetrics metrics = g2D.getFontMetrics();
-    int textX = (int) (x + (squareSize - metrics.stringWidth(txtAffMax))/2);
-    int textY = (int) (y + ((squareSize2 - metrics.getHeight())/2) + metrics.getAscent());
-    g2D.setColor(Color.WHITE);
+    int textX = (int) (x + (squareSize - metrics.stringWidth(txtAffMax)) * 0.5);
+    int textY = (int) (y + ((squareSize2 - metrics.getHeight()) * 0.5) + metrics.getAscent());
+    g2D.setColor(color);
     g2D.drawString(txtAff, textX, textY);
 }
 
@@ -105,14 +114,12 @@ public void grille(int x, int y, Graphics2D g2D) {
 	g2D.setColor(new Color(186, 172, 159));
 	g2D.fill(createRoundedRect(xDepart, yDepart, boxTaille + spaceLines, boxTaille + spaceLines, g2D));
 
-	int[][] grilleClient = this.game.getClientGame().getGridCopy();
-	
 	x = xDepart + spaceLines;
 	y += yDepart + spaceLines;
 
-	for(int i = 0; i < 4; i++) {
-		for(int j = 0; j < 4; j++) {
-			generateBox(x, y, g2D, grilleClient[i][j]);
+	for(int row = 0; row < 4; row++) {
+		for(int column = 0; column < 4; column++) {
+			generateBox(x, y, g2D, this.game.getClientGame().getBox(row, column));
 			x += jumpBoxes;	
 		}
 		x = xDepart + spaceLines;
@@ -131,10 +138,12 @@ public void score(int x, int y, int nbScore, Float sizeFont, Graphics2D g2D) {
 	g2D.setStroke(new BasicStroke(sizeFont));
 	g2D.fillRect(x, y, metrics.stringWidth(scoreAffMax)+10, metrics.getHeight());
 	if (nbScore <= 99999 && this.game.getGameStatus() == GameStatus.IN_GAME) {
-		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "Score: "+nbScore, g2D);
+		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "Score: "+nbScore, g2D, new Color(247, 244, 240));
 	}
-	else if (this.game.getGameStatus() != GameStatus.LOOSE || this.game.getGameStatus() != GameStatus.NOT_IN_GAME) {
-		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "You broke it !", g2D);
+	else if (this.game.getGameStatus() == GameStatus.WIN) {
+		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "You broke it !", g2D, new Color(247, 244, 240));
+	} else if (this.game.getGameStatus() == GameStatus.LOOSE) {
+		textCenteredRect(x+5, y, metrics.stringWidth(scoreAffMax), metrics.getHeight(), scoreAffMax, "You loose ;(", g2D, new Color(247, 244, 240));
 	}
 	g2D.setFont(g2D.getFont().deriveFont(g2D.getFont().getSize() / sizeFont));
 	
