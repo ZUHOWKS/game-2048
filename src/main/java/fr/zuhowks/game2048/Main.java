@@ -9,7 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
         JFrame window = new MainWindow();
-        window.setFocusable(true);
         window.setVisible(true);
         //devGame2048();
     }
@@ -21,6 +20,8 @@ public class Main {
 
         System.out.println("Test 1");
         System.out.println("------");
+
+        /*
 
         serverGame.setBox(0,0, 2);
         serverGame.setBox(1,0, 2);
@@ -38,6 +39,8 @@ public class Main {
         serverGame.setBox(0,3, 4);
         serverGame.setBox(1,3, 2);
 
+         */
+
         System.out.println("Can play ? " + serverGame.canPlay());
 
         System.out.println(serverGame);
@@ -47,12 +50,16 @@ public class Main {
         System.out.println(serverGame);
 
         serverGame.moveUp();
+        serverGame.generateRandomBox();
         System.out.println(serverGame);
         serverGame.moveDown();
+        serverGame.generateRandomBox();
         System.out.println(serverGame);
         serverGame.moveLeft();
+        serverGame.generateRandomBox();
         System.out.println(serverGame);
         serverGame.moveRight();
+        serverGame.generateRandomBox();
         System.out.println(serverGame);
 
         System.out.println("Score: " + serverGame.getScore());
