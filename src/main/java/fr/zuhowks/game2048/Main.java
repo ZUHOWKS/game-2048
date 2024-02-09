@@ -1,92 +1,97 @@
 package fr.zuhowks.game2048;
 
-import fr.zuhowks.game2048.game.server.Game2048;
+import fr.zuhowks.game2048.game.server.ServerGame;
+import fr.zuhowks.game2048.windows.MainWindow;
+
+import javax.swing.*;
 
 public class Main {
 
     public static void main(String[] args) {
-
-        devGame2048();
+        JFrame window = new MainWindow();
+        window.setFocusable(true);
+        window.setVisible(true);
+        //devGame2048();
     }
 
     private static void devGame2048() {
-        Game2048 game2048 = new Game2048();
+        ServerGame serverGame = new ServerGame();
 
         System.out.println();
 
         System.out.println("Test 1");
         System.out.println("------");
 
-        game2048.setBox(0,0, 2);
-        game2048.setBox(1,0, 2);
-        game2048.setBox(3,0, 4);
+        serverGame.setBox(0,0, 2);
+        serverGame.setBox(1,0, 2);
+        serverGame.setBox(3,0, 4);
 
-        game2048.setBox(0,1, 2);
-        game2048.setBox(1,1, 2);
-        game2048.setBox(2,1, 2);
-        game2048.setBox(3,1, 2);
+        serverGame.setBox(0,1, 2);
+        serverGame.setBox(1,1, 2);
+        serverGame.setBox(2,1, 2);
+        serverGame.setBox(3,1, 2);
 
-        game2048.setBox(1,2, 2);
-        game2048.setBox(2,2, 2);
-        game2048.setBox(3,2, 2);
+        serverGame.setBox(1,2, 2);
+        serverGame.setBox(2,2, 2);
+        serverGame.setBox(3,2, 2);
 
-        game2048.setBox(0,3, 4);
-        game2048.setBox(1,3, 2);
+        serverGame.setBox(0,3, 4);
+        serverGame.setBox(1,3, 2);
 
-        System.out.println("Can play ? " + game2048.canPlay());
+        System.out.println("Can play ? " + serverGame.canPlay());
 
-        System.out.println(game2048);
+        System.out.println(serverGame);
 
-        game2048.generateRandomBox();
+        serverGame.generateRandomBox();
 
-        System.out.println(game2048);
+        System.out.println(serverGame);
 
-        game2048.moveUp();
-        System.out.println(game2048);
-        game2048.moveDown();
-        System.out.println(game2048);
-        game2048.moveLeft();
-        System.out.println(game2048);
-        game2048.moveRight();
-        System.out.println(game2048);
+        serverGame.moveUp();
+        System.out.println(serverGame);
+        serverGame.moveDown();
+        System.out.println(serverGame);
+        serverGame.moveLeft();
+        System.out.println(serverGame);
+        serverGame.moveRight();
+        System.out.println(serverGame);
 
-        System.out.println("Score: " + game2048.getScore());
+        System.out.println("Score: " + serverGame.getScore());
 
 
-        game2048.resetGrid();
-        game2048.resetScore();
+        serverGame.resetGrid();
+        serverGame.resetScore();
 
         System.out.println("Test 2");
         System.out.println("------");
 
 
-        game2048.setBox(0,0, 2);
-        game2048.setBox(0,1, 2);
-        game2048.setBox(0, 3, 4);
+        serverGame.setBox(0,0, 2);
+        serverGame.setBox(0,1, 2);
+        serverGame.setBox(0, 3, 4);
 
-        game2048.setBox(1,0, 2);
-        game2048.setBox(1,1, 2);
-        game2048.setBox(1,2, 2);
-        game2048.setBox(1,3, 2);
+        serverGame.setBox(1,0, 2);
+        serverGame.setBox(1,1, 2);
+        serverGame.setBox(1,2, 2);
+        serverGame.setBox(1,3, 2);
 
-        game2048.setBox(2,1, 2);
-        game2048.setBox(2,2, 2);
-        game2048.setBox(2,3, 2);
+        serverGame.setBox(2,1, 2);
+        serverGame.setBox(2,2, 2);
+        serverGame.setBox(2,3, 2);
 
-        game2048.setBox(3,0, 4);
-        game2048.setBox(3,1, 2);
+        serverGame.setBox(3,0, 4);
+        serverGame.setBox(3,1, 2);
 
-        System.out.println(game2048);
-        game2048.moveLeft();
-        System.out.println(game2048);
-        game2048.moveRight();
-        System.out.println(game2048);
-        game2048.moveUp();
-        System.out.println(game2048);
-        game2048.moveDown();
-        System.out.println(game2048);
+        System.out.println(serverGame);
+        serverGame.moveLeft();
+        System.out.println(serverGame);
+        serverGame.moveRight();
+        System.out.println(serverGame);
+        serverGame.moveUp();
+        System.out.println(serverGame);
+        serverGame.moveDown();
+        System.out.println(serverGame);
 
-        System.out.println("Score: " + game2048.getScore());
+        System.out.println("Score: " + serverGame.getScore());
 
     }
 }
