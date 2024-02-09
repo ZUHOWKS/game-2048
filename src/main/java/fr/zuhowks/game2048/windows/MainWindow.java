@@ -16,6 +16,7 @@ public class MainWindow extends JFrame {
 
         this.setSize(WIDTH,HEIGHT);
         this.add(canvas);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
     }
 }
