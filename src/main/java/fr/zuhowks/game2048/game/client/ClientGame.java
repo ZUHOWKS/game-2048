@@ -14,16 +14,20 @@ public class ClientGame extends Game2048 {
     }
 
 
-    public void update(int[][] grid) {
+    public void update(int[][] newGrid, int newScore) {
         int[][] oldGrid = new int[4][4];
 
         for (int row=0; row<4; row++) {
             System.arraycopy(this.grid[row], 0, oldGrid[row], 0, 4);
         }
 
-        this.copyGrid(grid);
+        this.copyGrid(newGrid);
+
+        int oldScore = this.score;
+        this.score = newScore;
 
         this.pcs.firePropertyChange("grid", oldGrid, this.grid);
+        this.pcs.firePropertyChange("score", oldScore, this.score);
     }
 
     public int[][] getGrid() {

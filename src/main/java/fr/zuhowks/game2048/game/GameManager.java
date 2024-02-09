@@ -46,7 +46,7 @@ public class GameManager {
                     }
                 }
 
-                this.clientGame.update(this.serverGame.getGridCopy());
+                this.clientGame.update(this.serverGame.getGridCopy(), this.serverGame.getScore());
             }
         }
 
