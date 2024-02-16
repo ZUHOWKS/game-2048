@@ -1,12 +1,12 @@
 package fr.zuhowks.game2048.game.client;
 
-import fr.zuhowks.game2048.game.Game2048;
+import fr.zuhowks.game2048.common.game.Game2048;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class ClientGame extends Game2048 {
-    private PropertyChangeSupport pcs;
+    private final PropertyChangeSupport pcs;
 
     public ClientGame() {
         super();
@@ -32,10 +32,6 @@ public class ClientGame extends Game2048 {
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        this.pcs.removePropertyChangeListener(listener);
     }
 
 }

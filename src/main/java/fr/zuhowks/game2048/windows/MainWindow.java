@@ -7,10 +7,12 @@ import fr.zuhowks.game2048.listeners.KeyBoardCommandListener;
 import javax.swing.*;
 
 public class MainWindow extends JFrame {
-    private GameManager game;
+
+    private final GameManager game;
     public static final int HEIGHT = 800;
     public static final int WIDTH = 800;
-    Canvas2048 canvas;
+    private final Canvas2048 canvas;
+
     public MainWindow() {
         this.game = new GameManager();
         this.canvas = new Canvas2048(this.game);

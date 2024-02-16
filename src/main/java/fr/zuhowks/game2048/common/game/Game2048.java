@@ -1,23 +1,14 @@
-package fr.zuhowks.game2048.game;
+package fr.zuhowks.game2048.common.game;
 
 public abstract class Game2048 {
     protected final int[][] grid;
     protected int score;
 
+
     protected Game2048() {
         this.grid = new int[4][4];
         this.score = 0;
 
-    }
-
-    public int[][] getGridCopy() {
-        int[][] grid = new int[4][4];
-
-        for (int row=0; row<4; row++) {
-            System.arraycopy(this.grid[row], 0, grid[row], 0, 4);
-        }
-
-        return grid;
     }
 
     public int[][] getGrid() {
@@ -33,10 +24,10 @@ public abstract class Game2048 {
             System.arraycopy(grid[row], 0, this.grid[row], 0, 4);
         }
     }
+
     public int getBox(int row, int column) {
         return this.grid[row][column];
     }
-
 
     @Override
     public String toString() {

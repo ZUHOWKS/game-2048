@@ -1,10 +1,9 @@
 package fr.zuhowks.game2048.game.server;
 
-import fr.zuhowks.game2048.game.Game2048;
+import fr.zuhowks.game2048.common.game.Game2048;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 
 public class ServerGame extends Game2048 {
 
