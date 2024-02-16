@@ -6,6 +6,8 @@ import fr.zuhowks.game2048.game.server.stats.GameStatus;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameManager {
 
@@ -53,8 +55,11 @@ public class GameManager {
                 }
 
                 this.serverGame.generateRandomBox();
-                updateGameStatus();
-                this.clientGame.update(this.serverGame.getGrid(), this.serverGame.getScore());
+                if (!Arrays.deepEquals(clientGame.getGrid(), serverGame.getGrid())) {
+                    updateGameStatus();
+                    this.clientGame.update(this.serverGame.getGrid(), this.serverGame.getScore());
+                }
+
             } else {
                 this.gameStatus = GameStatus.LOOSE;
             }
