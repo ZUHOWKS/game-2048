@@ -113,6 +113,8 @@ public class GameManager {
         //GameStatus oldStatus = this.gameStatus;
         this.gameStatus = GameStatus.IN_GAME;
         Main.LOGGER.log(Logger.ALL, "Controlleur => Mise à jour du status du jeu.");
+
+        Main.LOGGER.log(Logger.INFO, "La partie est lancée !");
         //pcs.firePropertyChange("gameStatus", oldStatus, this.gameStatus);
     }
 
@@ -190,8 +192,11 @@ public class GameManager {
 
             oOut.writeObject(this.serverGame);
 
+            oOut.close();
+            fOut.close();
+
         } catch (Exception e) {
-            Main.LOGGER.log(Logger.INFO, "Error => Impossible d'enregistrer la partie: " + e);
+            Main.LOGGER.log(Logger.DEBUG, "Error => Impossible d'enregistrer la partie: " + e);
         }
     }
 
@@ -204,8 +209,9 @@ public class GameManager {
      * @throws ClassNotFoundException if it's impossible to convert the object into fr.zuhowks.game2048.game.server.ServerGame class.
      */
     public void loadParty(String partyPath) throws IOException, ClassNotFoundException {
-        File file = new File(partyPath);
 
+        File file = new File(partyPath);
+        Main.LOGGER.log(Logger.DEBUG, "");
         FileInputStream fIn = new FileInputStream(file);
         ObjectInputStream oIn = new ObjectInputStream(fIn);
 
@@ -214,6 +220,11 @@ public class GameManager {
         ServerGame gameToLoad = (ServerGame) obj;
         this.serverGame.copyGrid(gameToLoad.getGrid());
         this.serverGame.setScore(gameToLoad.getScore());
+
+        oIn.close();
+        fIn.close();
+
+        this.clientGame.update(this.serverGame.getGrid(), this.serverGame.getScore());
 
     }
 
