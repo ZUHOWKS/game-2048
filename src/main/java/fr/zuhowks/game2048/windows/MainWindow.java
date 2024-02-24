@@ -7,6 +7,9 @@ import fr.zuhowks.game2048.game.GameManager;
 import fr.zuhowks.game2048.listeners.KeyBoardCommandListener;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
 
@@ -29,6 +32,22 @@ public class MainWindow extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1,1));
+        buttonPanel.setPreferredSize(new java.awt.Dimension(buttonPanel.getPreferredSize().width, 80));
+
+        JButton resetButton = new JButton("Recommencer");
+        JButton saveButton = new JButton("Sauver la partie");
+        JButton loadButton = new JButton("Charger une partie");
+        JButton[] buttons = {resetButton, saveButton, loadButton};
+        for (JButton button : buttons){
+            button.setBackground(new Color(186, 172, 159));
+            buttonPanel.add(button);
+            button.setFocusable(false);
+        }
+
+        this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
         Main.LOGGER.log(Logger.ALL, "Configuration des presets claviers.");
         this.addKeyListener(new KeyBoardCommandListener(this.game));
