@@ -1,6 +1,8 @@
 package fr.zuhowks.game2048.common.game;
 
-public abstract class Game2048 {
+import java.io.Serializable;
+
+public abstract class Game2048 implements Serializable {
     protected final int[][] grid;
     protected int score;
 
@@ -23,6 +25,19 @@ public abstract class Game2048 {
         for (int row=0; row<4; row++) {
             System.arraycopy(grid[row], 0, this.grid[row], 0, 4);
         }
+    }
+
+    public boolean isGridEqual(int[][] grid) {
+
+        for (int row=0; row<4; ++row) {
+            for (int column=0; column<4; ++column) {
+                if (this.getGrid()[row][column] != grid[row][column]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public int getBox(int row, int column) {

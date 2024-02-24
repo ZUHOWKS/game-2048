@@ -1,104 +1,25 @@
 package fr.zuhowks.game2048;
 
-import fr.zuhowks.game2048.game.server.ServerGame;
+import fr.zuhowks.game2048.common.logs.Logger;
 import fr.zuhowks.game2048.windows.MainWindow;
 
 import javax.swing.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Main {
 
+    public static String sessionDir = System.getProperty("user.home") + "/.game2048/";
+    public static Logger LOGGER = new Logger(Logger.DEBUG, Main.sessionDir + "/logs/" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + ".log");
+
     public static void main(String[] args) {
+        LOGGER.log(Logger.INFO, "Démarrage de Game2048 by ZUHOWKS & Majurax !");
+        LOGGER.log(Logger.DEBUG, "Debug mod active.");
+
+        LOGGER.log(Logger.DEBUG, "Création de la fenêtre.");
         JFrame window = new MainWindow();
+
+        LOGGER.log(Logger.DEBUG, "Affichage de la fenêtre.");
         window.setVisible(true);
-        //devGame2048();
-    }
-
-    private static void devGame2048() {
-        ServerGame serverGame = new ServerGame();
-
-        System.out.println();
-
-        System.out.println("Test 1");
-        System.out.println("------");
-
-        /*
-
-        serverGame.setBox(0,0, 2);
-        serverGame.setBox(1,0, 2);
-        serverGame.setBox(3,0, 4);
-
-        serverGame.setBox(0,1, 2);
-        serverGame.setBox(1,1, 2);
-        serverGame.setBox(2,1, 2);
-        serverGame.setBox(3,1, 2);
-
-        serverGame.setBox(1,2, 2);
-        serverGame.setBox(2,2, 2);
-        serverGame.setBox(3,2, 2);
-
-        serverGame.setBox(0,3, 4);
-        serverGame.setBox(1,3, 2);
-
-         */
-
-        System.out.println("Can play ? " + serverGame.canPlay());
-
-        System.out.println(serverGame);
-
-        serverGame.generateRandomBox();
-
-        System.out.println(serverGame);
-
-        serverGame.moveUp();
-        serverGame.generateRandomBox();
-        System.out.println(serverGame);
-        serverGame.moveDown();
-        serverGame.generateRandomBox();
-        System.out.println(serverGame);
-        serverGame.moveLeft();
-        serverGame.generateRandomBox();
-        System.out.println(serverGame);
-        serverGame.moveRight();
-        serverGame.generateRandomBox();
-        System.out.println(serverGame);
-
-        System.out.println("Score: " + serverGame.getScore());
-
-
-        serverGame.resetGrid();
-        serverGame.resetScore();
-
-        System.out.println("Test 2");
-        System.out.println("------");
-
-
-        serverGame.setBox(0,0, 2);
-        serverGame.setBox(0,1, 2);
-        serverGame.setBox(0, 3, 4);
-
-        serverGame.setBox(1,0, 2);
-        serverGame.setBox(1,1, 2);
-        serverGame.setBox(1,2, 2);
-        serverGame.setBox(1,3, 2);
-
-        serverGame.setBox(2,1, 2);
-        serverGame.setBox(2,2, 2);
-        serverGame.setBox(2,3, 2);
-
-        serverGame.setBox(3,0, 4);
-        serverGame.setBox(3,1, 2);
-
-        System.out.println(serverGame);
-        serverGame.moveLeft();
-        System.out.println(serverGame);
-        serverGame.moveRight();
-        System.out.println(serverGame);
-        serverGame.moveUp();
-        System.out.println(serverGame);
-        serverGame.moveDown();
-        System.out.println(serverGame);
-
-        System.out.println("Score: " + serverGame.getScore());
-
     }
 }
