@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainWindow extends JFrame {
 
@@ -41,11 +42,48 @@ public class MainWindow extends JFrame {
         JButton saveButton = new JButton("Sauver la partie");
         JButton loadButton = new JButton("Charger une partie");
         JButton[] buttons = {resetButton, saveButton, loadButton};
+
         for (JButton button : buttons){
             button.setBackground(new Color(186, 172, 159));
             buttonPanel.add(button);
             button.setFocusable(false);
         }
+
+        // Restart a party
+        resetButton.addActionListener(e -> {
+            Main.LOGGER.log(Logger.INFO, "Démarrage d'une nouvelle partie");
+            this.game.startParty();
+        });
+
+        // Save the current party
+        saveButton.addActionListener(e -> {
+            try {
+                Main.LOGGER.log(Logger.INFO, "Sauvegarde de la partie...");
+                this.game.saveParty();
+            } catch (IOException ex) {
+                Main.LOGGER.log(Logger.INFO, "Erreur => Enregistrement de la partie impossible: " + ex);
+                throw new RuntimeException(ex);
+            }
+        });
+
+        // Open file explorer to select a party
+        loadButton.addActionListener(e -> {
+            Main.LOGGER.log(Logger.INFO, "Ouverture de l'explorateur des fichiers.");
+            JFileChooser choice = new JFileChooser();
+
+            int option = choice.showOpenDialog(this);
+            if (option == JFileChooser.APPROVE_OPTION) {
+                try {
+                    Main.LOGGER.log(Logger.INFO, "Chargement de la partie...");
+                    this.game.loadParty(choice.getSelectedFile().getPath());
+                } catch (IOException | ClassNotFoundException ex) {
+                    Main.LOGGER.log(Logger.INFO, "Erreur => Chargement de la partie impossible: " + ex);
+                    throw new RuntimeException(ex);
+                }
+            }
+
+        });
+
 
         this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
