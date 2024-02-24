@@ -13,20 +13,42 @@ public abstract class Game2048 implements Serializable {
 
     }
 
+    /**
+     * Get the 2048 grid 4x4.
+     *
+     * @return int table 4x4.
+     */
     public int[][] getGrid() {
         return grid;
     }
 
+    /**
+     * Get the score of the game.
+     *
+     * @return score of the game
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * Copy a grid of a 2048 game.
+     *
+     * @param grid grid to copy.
+     */
     public void copyGrid(int[][] grid) {
         for (int row=0; row<4; row++) {
             System.arraycopy(grid[row], 0, this.grid[row], 0, 4);
         }
     }
 
+
+    /**
+     * Check if a grid is equal to the grid class.
+     *
+     * @param grid grid to compare.
+     * @return if the grid parameter is equal.
+     */
     public boolean isGridEqual(int[][] grid) {
 
         for (int row=0; row<4; ++row) {
@@ -40,10 +62,20 @@ public abstract class Game2048 implements Serializable {
         return true;
     }
 
+    /**
+     * Get the value contain in the box
+     *
+     * @param row the row
+     * @param column the column
+     * @return the value of the box
+     */
     public int getBox(int row, int column) {
         return this.grid[row][column];
     }
 
+    /**
+     * @return the grid in string format
+     */
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();

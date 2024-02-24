@@ -16,6 +16,12 @@ public class ClientGame extends Game2048 {
     }
 
 
+    /**
+     * Update the client model party.
+     *
+     * @param newGrid the new grid to replace by the old.
+     * @param newScore  the new score to replace by the old.
+     */
     public void update(int[][] newGrid, int newScore) {
 
         Main.LOGGER.log(Logger.ALL, "Vue => Copie de la grille serveur.");
@@ -36,6 +42,11 @@ public class ClientGame extends Game2048 {
         this.pcs.firePropertyChange("score", oldScore, this.score);
     }
 
+    /**
+     * Add a property change listener to listen the client model.
+     *
+     * @param listener listener of property change.
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
     }

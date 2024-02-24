@@ -38,6 +38,9 @@ public class Canvas2048 extends JPanel implements PropertyChangeListener {
 		setupBoxColors();
 	}
 
+	/**
+	 * Register in a hashmap the colors of the boxes in function of the value.
+	 */
 	private void setupBoxColors() {
 		this.boxColors.put(0, new Color(203, 191, 178));
 		this.boxColors.put(2, new Color(237, 227, 217));
@@ -67,12 +70,12 @@ public class Canvas2048 extends JPanel implements PropertyChangeListener {
 
 
 	/**
-	 * Generate boxes
+	 * Draw the grid boxes.
 	 *
-	 * @param x   | position x
-	 * @param y   | position y
-	 * @param g2D | Graphics2D to generate rounded box
-	 * @param nb  | number which is contained by the box.
+	 * @param x position x
+	 * @param y position y
+	 * @param g2D Graphics2D to generate rounded box
+	 * @param nb number which is contained by the box.
 	 */
 	public void generateBox(int x, int y, Graphics2D g2D, int nb) {
 
@@ -101,6 +104,18 @@ public class Canvas2048 extends JPanel implements PropertyChangeListener {
 
 	}
 
+	/**
+	 * Set text position center in the square.
+	 *
+	 * @param x x position
+	 * @param y y position
+	 * @param squareSize square width
+	 * @param squareSize2 square height
+	 * @param txtAffMax max font size of the text
+	 * @param txtAff font size of the text
+	 * @param g2D graphic
+	 * @param color text color
+	 */
 	public void textCenteredRect(int x, int y, double squareSize, double squareSize2, String txtAffMax, String txtAff, Graphics2D g2D, Color color) {
 		FontMetrics metrics = g2D.getFontMetrics();
 		int textX = (int) (x + (squareSize - metrics.stringWidth(txtAffMax)) * 0.5);
@@ -109,6 +124,13 @@ public class Canvas2048 extends JPanel implements PropertyChangeListener {
 		g2D.drawString(txtAff, textX, textY);
 	}
 
+	/**
+	 * Draw the grid of the game.
+	 *
+	 * @param x x position
+	 * @param y y position
+	 * @param g2D graphic
+	 */
 	public void grille(int x, int y, Graphics2D g2D) {
 		int spaceLines = boxTaille / 40;
 		int jumpBoxes = boxTaille / 4;
@@ -129,6 +151,15 @@ public class Canvas2048 extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+	/**
+	 * Draw score of the party.
+	 *
+	 * @param x x position
+	 * @param y y position
+	 * @param nbScore score value
+	 * @param sizeFont font size
+	 * @param g2D graphic
+	 */
 	public void score(int x, int y, int nbScore, Float sizeFont, Graphics2D g2D) {
 		String scoreAffMax = "Score: 99999";
 		g2D.setColor(new Color(186, 172, 159));
