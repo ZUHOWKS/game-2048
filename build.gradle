@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'fr.zuhowks'
@@ -10,10 +11,16 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+
 }
 
-test {
-    useJUnitPlatform()
+application {
+    mainModule = 'fr.zuhowks.game2048'
+    mainClass = 'fr.zuhowks.game2048.Main'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'fr.zuhowks.game2048.Main'
+    }
 }
